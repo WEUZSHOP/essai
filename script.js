@@ -51,15 +51,35 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Numéro WhatsApp (format international, sans + ou espaces)
-const whatsappNumber = '221XXXXXXXX'; // remplace avec ton numéro
-// choose country buttons
-  document.querySelectorAll('.btn-choose').forEach(btn=>{
-    btn.addEventListener('click', e=>{
+
+// --- script.js ---
+
+// 1️⃣ Mets ici ton numéro complet sans espaces ni "+" (ex : 221771234567)
+const whatsappNumber = '221XXXXXXXX';
+
+// 2️⃣ Fonction pour ouvrir WhatsApp avec un message
+function openWhatsAppWith(message) {
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  // Redirection directe : fonctionne sur mobile et ouvre WhatsApp Web / Desktop
+  window.location.href = url;
+}
+
+// 3️⃣ Attacher l'évènement sur tous les boutons ayant la classe .btn-choose
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.btn-choose').forEach(btn => {
+    btn.addEventListener('click', e => {
       const country = e.currentTarget.dataset.country || 'un pays';
-      openWhatsAppWith(`Bonjour, je souhaite démarrer une procédure pour ${country}.`);
+      openWhatsAppWith(
+        `Bonjour, je souhaite démarrer une procédure pour ${country}.`
+      );
     });
   });
+});
+
+
+  
+// Numéro WhatsApp (format international, sans + ou espaces)
+const whatsappNumber = '221XXXXXXXX'; // remplace avec ton numéro
 // Fonction pour ouvrir WhatsApp
 function openWhatsAppWith(message) {
   const text = encodeURIComponent(message);
@@ -122,5 +142,6 @@ document.querySelectorAll('[data-whatsapp]').forEach(btn => {
   });
 
 });
+
 
 
