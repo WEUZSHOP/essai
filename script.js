@@ -52,28 +52,38 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// --- script.js ---
+// Numéro WhatsApp (format international, sans + ou espaces)
+const whatsappNumber = '221XXXXXXXX'; // remplace avec ton numéro
 
-// 1️⃣ Numéro WhatsApp complet SANS + ni espaces
+// Fonction pour ouvrir WhatsApp
+function openWhatsAppWith(message) {
+  const text = encodeURIComponent(message);
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Numéro WhatsApp complet (sans + ni espaces)
-  const whatsappNumber = '221771234567'; // ← remplace par ton vrai numéro
-
-  // Fonction d'ouverture
-  function openWhatsAppWith(message) {
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.location.href = url;
+  if (isMobile) {
+    // Mobile : ouvre l'app WhatsApp directement
+    window.location.href = `https://wa.me/${whatsappNumber}?text=${text}`;
+  } else {
+    // PC : essaie Desktop d'abord
+    const desktopUrl = `whatsapp://send?phone=${whatsappNumber}&text=${text}`;
+    const webUrl = `https://web.whatsapp.com/send?phone=${whatsappNumber}&text=${text}`;
+    
+    // Crée un iframe pour tenter d'ouvrir Desktop
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = desktopUrl;
+    document.body.appendChild(iframe);
   }
+}
 
-  // Écoute le clic sur tous les boutons .btn-choose
-  document.querySelectorAll('.btn-choose').forEach(btn => {
-    btn.addEventListener('click', e => {
-      const country = e.currentTarget.dataset.country || 'un pays';
-      openWhatsAppWith(`Bonjour, je souhaite démarrer une procédure pour ${country}.`);
-    });
+// Sélectionne tous les boutons WhatsApp sur la page
+document.querySelectorAll('[data-whatsapp]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const country = btn.getAttribute('data-country') || 'votre pays';
+    openWhatsAppWith(`Bonjour, je souhaite commencer ma procédure pour ${country}.`);
   });
 });
+
 
   
   /* TESTIMONIALS — auto rotate */
@@ -107,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
 
 
 
