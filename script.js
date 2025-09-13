@@ -52,8 +52,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
 // Numéro WhatsApp (format international, sans + ou espaces)
 const whatsappNumber = '221XXXXXXXX'; // remplace avec ton numéro
+ 
+ // choose country buttons
+  document.querySelectorAll('.btn-choose').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const country = e.currentTarget.dataset.country || 'un pays';
+      openWhatsAppWith(`Bonjour, je souhaite démarrer une procédure pour ${country}.`);
+    });
+  });
 
 // Fonction pour ouvrir WhatsApp
 function openWhatsAppWith(message) {
