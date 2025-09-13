@@ -53,18 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-// Numéro WhatsApp (format international, sans + ou espaces)
-const whatsappNumber = '221XXXXXXXX'; // remplace avec ton numéro
- 
- // choose country buttons
-  document.querySelectorAll('.btn-choose').forEach(btn=>{
-    btn.addEventListener('click', e=>{
-      const country = e.currentTarget.dataset.country || 'un pays';
-      openWhatsAppWith(`Bonjour, je souhaite démarrer une procédure pour ${country}.`);
-    });
-  });
+// Numéro WhatsApp (format international, sans + ni espaces)
+const whatsappNumber = '221785635806'; // remplace par ton numéro
 
-// Fonction pour ouvrir WhatsApp
+// Fonction unique pour ouvrir WhatsApp
 function openWhatsAppWith(message) {
   const text = encodeURIComponent(message);
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -73,25 +65,27 @@ function openWhatsAppWith(message) {
     // Mobile : ouvre l'app WhatsApp directement
     window.location.href = `https://wa.me/${whatsappNumber}?text=${text}`;
   } else {
-    // PC : essaie Desktop d'abord
+    // PC : essaie Desktop d'abord, sinon Web
+    // Tente WhatsApp Desktop
     const desktopUrl = `whatsapp://send?phone=${whatsappNumber}&text=${text}`;
-    const webUrl = `https://web.whatsapp.com/send?phone=${whatsappNumber}&text=${text}`;
-    
-    // Crée un iframe pour tenter d'ouvrir Desktop
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.src = desktopUrl;
-    document.body.appendChild(iframe);
+    window.location.href = desktopUrl;
+
+    // Si WhatsApp Desktop non installé, redirige vers WhatsApp Web après 500ms
+    setTimeout(() => {
+      const webUrl = `https://web.whatsapp.com/send?phone=${whatsappNumber}&text=${text}`;
+      window.open(webUrl, '_blank');
+    }, 500);
   }
 }
 
-// Sélectionne tous les boutons WhatsApp sur la page
-document.querySelectorAll('[data-whatsapp]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const country = btn.getAttribute('data-country') || 'votre pays';
-    openWhatsAppWith(`Bonjour, je souhaite commencer ma procédure pour ${country}.`);
+// Tous les boutons de pays
+document.querySelectorAll('.btn-choose, [data-whatsapp]').forEach(btn => {
+  btn.addEventListener('click', e => {
+    const country = btn.dataset.country || 'votre pays';
+    openWhatsAppWith(`Bonjour, je souhaite démarrer une procédure pour ${country}.`);
   });
 });
+
 
 
   
@@ -126,6 +120,7 @@ document.querySelectorAll('[data-whatsapp]').forEach(btn => {
   });
 
 });
+
 
 
 
