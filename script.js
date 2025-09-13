@@ -55,44 +55,25 @@ document.addEventListener('DOMContentLoaded', () => {
 // --- script.js ---
 
 // 1️⃣ Numéro WhatsApp complet SANS + ni espaces
-const whatsappNumber = '221771234567'; // ← remplace par ton vrai numéro
 
-// 2️⃣ Fonction unique
-function openWhatsAppWith(message) {
-  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-  window.location.href = url; // fonctionne sur mobile et PC (desktop ou web)
-}
-
-// 3️⃣ Attache les évènements une fois le DOM prêt
 document.addEventListener('DOMContentLoaded', () => {
+  // Numéro WhatsApp complet (sans + ni espaces)
+  const whatsappNumber = '221771234567'; // ← remplace par ton vrai numéro
 
-  // Bouton WhatsApp du header
-  const whatsappBtn = document.getElementById('whatsappBtn');
-  if (whatsappBtn) {
-    whatsappBtn.addEventListener('click', () =>
-      openWhatsAppWith('Bonjour, je souhaite des informations sur vos services.')
-    );
+  // Fonction d'ouverture
+  function openWhatsAppWith(message) {
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    window.location.href = url;
   }
 
-  // Bouton WhatsApp de la section contact
-  const whatsappContact = document.getElementById('whatsappContact');
-  if (whatsappContact) {
-    whatsappContact.addEventListener('click', () =>
-      openWhatsAppWith('Bonjour, je souhaite des informations sur vos services.')
-    );
-  }
-
-  // Boutons pour chaque pays
-  document.querySelectorAll('.btn-choose, [data-whatsapp]').forEach(btn => {
+  // Écoute le clic sur tous les boutons .btn-choose
+  document.querySelectorAll('.btn-choose').forEach(btn => {
     btn.addEventListener('click', e => {
       const country = e.currentTarget.dataset.country || 'un pays';
       openWhatsAppWith(`Bonjour, je souhaite démarrer une procédure pour ${country}.`);
     });
   });
-
 });
-
-
 
   
   /* TESTIMONIALS — auto rotate */
@@ -126,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
 
 
 
