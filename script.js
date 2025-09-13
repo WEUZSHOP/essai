@@ -52,29 +52,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// --- script.js ---
+// main whatsapp CTA in header
+  const whatsappBtn = document.getElementById('whatsappBtn');
+  if(whatsappBtn) whatsappBtn.addEventListener('click', ()=> openWhatsAppWith('Bonjour, je souhaite des informations sur vos services.'));
 
-// 1️⃣ Mets ici ton numéro complet sans espaces ni "+" (ex : 221771234567)
-const whatsappNumber = '221XXXXXXXX';
+  const whatsappContact = document.getElementById('whatsappContact');
+  if(whatsappContact) whatsappContact.addEventListener('click', ()=> openWhatsAppWith('Bonjour, je souhaite des informations sur vos services.'));
 
-// 2️⃣ Fonction pour ouvrir WhatsApp avec un message
-function openWhatsAppWith(message) {
-  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-  // Redirection directe : fonctionne sur mobile et ouvre WhatsApp Web / Desktop
-  window.location.href = url;
-}
-
-// 3️⃣ Attacher l'évènement sur tous les boutons ayant la classe .btn-choose
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.btn-choose').forEach(btn => {
-    btn.addEventListener('click', e => {
+  // choose country buttons
+  document.querySelectorAll('.btn-choose').forEach(btn=>{
+    btn.addEventListener('click', e=>{
       const country = e.currentTarget.dataset.country || 'un pays';
-      openWhatsAppWith(
-        `Bonjour, je souhaite démarrer une procédure pour ${country}.`
-      );
+      openWhatsAppWith(`Bonjour, je souhaite démarrer une procédure pour ${country}.`);
     });
   });
-});
 
 
   
@@ -142,6 +133,7 @@ document.querySelectorAll('[data-whatsapp]').forEach(btn => {
   });
 
 });
+
 
 
 
